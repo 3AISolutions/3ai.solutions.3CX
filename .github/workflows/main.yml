@@ -24,7 +24,7 @@ jobs:
           PROJECT_FILE_PATH: 3ai.solutions.3CX.csproj
 
           # NuGet package id, used for version detection & defaults to project name
-#           PACKAGE_NAME: Core
+          #PACKAGE_NAME: Core
 
           # Filepath with version info, relative to root of repository & defaults to PROJECT_FILE_PATH
           #VERSION_FILE_PATH: Directory.Build.props
@@ -33,7 +33,7 @@ jobs:
           VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
 
           # Useful with external providers like Nerdbank.GitVersioning, ignores VERSION_FILE_PATH & VERSION_REGEX
-          #VERSION_STATIC: 1.0.0
+          VERSION_STATIC: 1.0.1
 
           # Flag to toggle git tagging, enabled by default
           TAG_COMMIT: true
