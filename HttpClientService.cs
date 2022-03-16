@@ -112,7 +112,6 @@ namespace _3ai.solutions._3CX
 #endif
         }
 
-
         public void Dispose()
         {
             _httpClient?.Dispose();
