@@ -44,9 +44,9 @@ namespace _3ai.solutions._3CX
             return await InvokeDeleteAsync<BaseResponse>($"webmeeting/api/v1/scheduled/{meetingId}");
         }
 
-        public async Task<BaseResponse> GetScheduledAsync(string meetingId)
+        public async Task<ScheduledResponse> GetScheduledAsync(string meetingId)
         {
-            return await InvokeGetAsync<BaseResponse>($"webmeeting/api/v1/scheduled/{meetingId}");
+            return await InvokeGetAsync<ScheduledResponse>($"webmeeting/api/v1/scheduled/{meetingId}");
         }
 
         public async Task<MeetingsListResponse> MeetingListAsync(string subjectContains = "", int daysLimit = 0, int extension = 0)
