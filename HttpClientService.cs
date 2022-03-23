@@ -9,9 +9,13 @@ namespace _3ai.solutions._3CX
     public class HttpClientService : System.IDisposable
     {
         private readonly HttpClient _httpClient;
+        private readonly string _uri;
+        private readonly string _apiKey;
 
         public HttpClientService(string uri, string apiKey)
         {
+            _uri = uri;
+            _apiKey = apiKey;
             _httpClient = new HttpClient
             {
                 BaseAddress = new System.Uri(uri)
@@ -29,14 +33,20 @@ namespace _3ai.solutions._3CX
             return await InvokePostAsync<BaseResponse, List<Participant>>($"webmeeting/api/v1/participants/{meetingId}", participants);
         }
 
-        public async Task<BaseResponse> DeleteParticipantsAsync(string meetingId)
+        public async Task<BaseResponse> DeleteParticipantsAsync(string meetingId, List<string> emails)
         {
+            throw new System.NotImplementedException("Need to change to work with delete and body");
             return await InvokeDeleteAsync<BaseResponse>($"webmeeting/api/v1/participants/{meetingId}");
         }
 
         public async Task<ScheduledResponse> PostScheduledAsync(ScheduledRequest request)
         {
             return await InvokePostAsync<ScheduledResponse, ScheduledRequest>($"webmeeting/api/v1/scheduled", request);
+        }
+
+        public ScheduledResponse PostScheduled(ScheduledRequest request)
+        {
+            return InvokePost<ScheduledResponse, ScheduledRequest>($"webmeeting/api/v1/scheduled", request);
         }
 
         public async Task<BaseResponse> DeleteScheduledAsync(string meetingId)
@@ -71,6 +81,28 @@ namespace _3ai.solutions._3CX
         {
             string requestUri = $"webmeeting/api/v1/countparticipants/{meetingId}";
             return await InvokeGetAsync<CountparticipantsResponse>(requestUri);
+        }
+
+        private Tout InvokePost<Tout, Tin>(string requestUri, Tin obj)
+        {
+#if NETSTANDARD
+            var data = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+#elif NET
+            var data = System.Text.Json.JsonSerializer.Serialize(obj);
+#endif
+            //var content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
+            var webClient = new System.Net.WebClient
+            {
+                BaseAddress = _uri
+            };
+            webClient.Headers.Add("3CX-ApiKey", _apiKey);
+            webClient.Headers.Add("content-type", "application/json");
+            var resContent = webClient.UploadString(requestUri, "POST", data);
+#if NETSTANDARD
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<Tout>(resContent);
+#elif NET
+            return System.Text.Json.JsonSerializer.Deserialize<Tout>(resContent);
+#endif
         }
 
         private async Task<Tout> InvokePostAsync<Tout, Tin>(string requestUri, Tin obj)
@@ -115,6 +147,7 @@ namespace _3ai.solutions._3CX
         public void Dispose()
         {
             _httpClient?.Dispose();
+            System.GC.SuppressFinalize(this);
         }
     }
 }
