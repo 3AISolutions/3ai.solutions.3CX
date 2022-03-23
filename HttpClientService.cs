@@ -35,7 +35,7 @@ namespace _3ai.solutions._3CX
 
         public async Task<BaseResponse> DeleteParticipantsAsync(string meetingId, List<string> emails)
         {
-            throw new System.NotImplementedException("Need to change to work with delete and body");
+            throw new System.NotImplementedException("Need to change to work with delete and body!");
             return await InvokeDeleteAsync<BaseResponse>($"webmeeting/api/v1/participants/{meetingId}");
         }
 
