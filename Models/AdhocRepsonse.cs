@@ -1,6 +1,6 @@
 ﻿namespace _3ai.solutions._3CX.Models
 {
-    public class AdhocReponse : BaseResponse
+    public class AdhocResponse : BaseResponse
     {
         public Result result { get; set; }
         public class Result

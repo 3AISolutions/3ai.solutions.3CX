@@ -19,9 +19,9 @@ namespace _3ai.solutions._3CX
             _httpClient.DefaultRequestHeaders.Add("3CX-ApiKey", apiKey);
         }
 
-        public async Task<AdhocReponse> AdhocAsync(string email, int extension, string subject)
+        public async Task<AdhocResponse> AdhocAsync(string email, int extension, string subject)
         {
-            return await InvokePostAsync<AdhocReponse, string>($"webmeeting/api/v1/adhoc?email={email}&extension={extension}&subject={subject}", "");
+            return await InvokePostAsync<AdhocResponse, string>($"webmeeting/api/v1/adhoc?email={email}&extension={extension}&subject={subject}", "");
         }
 
         public async Task<BaseResponse> PostParticipantsAsync(string meetingId, List<Participant> participants)
