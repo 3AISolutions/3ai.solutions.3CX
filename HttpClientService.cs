@@ -176,7 +176,7 @@ namespace _3ai.solutions._3CX
             var resContent = await res.Content.ReadAsStringAsync();
 #if NETSTANDARD
             return Newtonsoft.Json.JsonConvert.DeserializeObject<Tout>(resContent);
-#elif NET6_0_OR_GREATER
+#elif NET
             return System.Text.Json.JsonSerializer.Deserialize<Tout>(resContent);
 #endif
         }
@@ -193,7 +193,7 @@ namespace _3ai.solutions._3CX
                 var resContent = webClient.DownloadString(requestUri);
 #if NETSTANDARD
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<Tout>(resContent);
-#elif NET6_0_OR_GREATER
+#elif NET
                 return System.Text.Json.JsonSerializer.Deserialize<Tout>(resContent);
 #endif
             }
@@ -205,7 +205,7 @@ namespace _3ai.solutions._3CX
             var resContent = await res.Content.ReadAsStringAsync();
 #if NETSTANDARD
             return Newtonsoft.Json.JsonConvert.DeserializeObject<Tout>(resContent);
-#elif NET6_0_OR_GREATER
+#elif NET
             return System.Text.Json.JsonSerializer.Deserialize<Tout>(resContent);
 #endif
         }
@@ -222,7 +222,7 @@ namespace _3ai.solutions._3CX
                 var resContent = webClient.UploadString(requestUri, "DELETE", data);
 #if NETSTANDARD
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<Tout>(resContent);
-#elif NET6_0_OR_GREATER
+#elif NET
                 return System.Text.Json.JsonSerializer.Deserialize<Tout>(resContent);
 #endif
             }
