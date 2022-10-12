@@ -130,10 +130,13 @@ namespace _3ai.solutions._3CX
             return InvokeGet<CountparticipantsResponse>(requestUri);
         }
 
-#if NETSTANDARD
         private TOut InvokePost<TOut, TIn>(string requestUri, TIn obj)
         {
+#if NETSTANDARD
             var data = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+#elif NET
+            var data = System.Text.Json.JsonSerializer.Serialize(obj);
+#endif
             using (var webClient = new System.Net.WebClient
             {
                 BaseAddress = _uri
@@ -142,10 +145,13 @@ namespace _3ai.solutions._3CX
                 webClient.Headers.Add("3CX-ApiKey", _apiKey);
                 webClient.Headers.Add("content-type", "application/json");
                 var resContent = webClient.UploadString(requestUri, "POST", data);
+#if NETSTANDARD
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<TOut>(resContent);
+#elif NET
+                return System.Text.Json.JsonSerializer.Deserialize<TOut>(resContent);
+#endif
             }
         }
-#endif
 
         private async Task<TOut> InvokePostAsync<TOut, TIn>(string requestUri, TIn obj)
         {
@@ -175,7 +181,6 @@ namespace _3ai.solutions._3CX
 #endif
         }
 
-#if NETSTANDARD
         private TOut InvokeGet<TOut>(string requestUri)
         {
             using (var webClient = new System.Net.WebClient
@@ -186,11 +191,13 @@ namespace _3ai.solutions._3CX
                 webClient.Headers.Add("3CX-ApiKey", _apiKey);
                 webClient.Headers.Add("content-type", "application/json");
                 var resContent = webClient.DownloadString(requestUri);
-
+#if NETSTANDARD
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<TOut>(resContent);
+#elif NET
+                return System.Text.Json.JsonSerializer.Deserialize<TOut>(resContent);
+#endif
             }
         }
-#endif
 
         private async Task<TOut> InvokeDeleteAsync<TOut>(string requestUri)
         {
@@ -203,7 +210,6 @@ namespace _3ai.solutions._3CX
 #endif
         }
 
-#if NETSTANDARD
         private TOut InvokeDelete<TOut>(string requestUri, string data = "")
         {
             using (var webClient = new System.Net.WebClient
@@ -214,10 +220,13 @@ namespace _3ai.solutions._3CX
                 webClient.Headers.Add("3CX-ApiKey", _apiKey);
                 webClient.Headers.Add("content-type", "application/json");
                 var resContent = webClient.UploadString(requestUri, "DELETE", data);
+#if NETSTANDARD
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<TOut>(resContent);
+#elif NET
+                return System.Text.Json.JsonSerializer.Deserialize<TOut>(resContent);
+#endif
             }
         }
-#endif
 
         public void Dispose()
         {
