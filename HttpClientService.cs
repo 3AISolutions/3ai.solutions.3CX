@@ -25,118 +25,115 @@ namespace _3ai.solutions._3CX
 
         public async Task<AdhocResponse> AdhocAsync(string email, int extension, string subject)
         {
-            return await InvokePostAsync<AdhocResponse, string>($"webmeeting/api/v1/adhoc?email={email}&extension={extension}&subject={subject}", "");
+            return await InvokePostAsync<AdhocResponse, string>($"webmeeTIng/api/v1/adhoc?email={email}&extension={extension}&subject={subject}", "");
         }
 
         public AdhocResponse Adhoc(string email, int extension, string subject)
         {
-            return InvokePost<AdhocResponse, string>($"webmeeting/api/v1/adhoc?email={email}&extension={extension}&subject={subject}", "");
+            return InvokePost<AdhocResponse, string>($"webmeeTIng/api/v1/adhoc?email={email}&extension={extension}&subject={subject}", "");
         }
 
-        public async Task<BaseResponse> PostParticipantsAsync(string meetingId, List<Participant> participants)
+        public async Task<BaseResponse> PostParticipantsAsync(string meeTIngId, List<Participant> participants)
         {
-            return await InvokePostAsync<BaseResponse, List<Participant>>($"webmeeting/api/v1/participants/{meetingId}", participants);
+            return await InvokePostAsync<BaseResponse, List<Participant>>($"webmeeTIng/api/v1/participants/{meeTIngId}", participants);
         }
 
-        public BaseResponse PostParticipants(string meetingId, List<Participant> participants)
+        public BaseResponse PostParticipants(string meeTIngId, List<Participant> participants)
         {
-            return InvokePost<BaseResponse, List<Participant>>($"webmeeting/api/v1/participants/{meetingId}", participants);
+            return InvokePost<BaseResponse, List<Participant>>($"webmeeTIng/api/v1/participants/{meeTIngId}", participants);
         }
 
-        //public async Task<BaseResponse> DeleteParticipantsAsync(string meetingId, List<string> emails)
+        //public async Task<BaseResponse> DeleteParticipantsAsync(string meeTIngId, List<string> emails)
         //{
-        //    return await InvokeDeleteAsync<BaseResponse>($"webmeeting/api/v1/participants/{meetingId}");
+        //    return await InvokeDeleteAsync<BaseResponse>($"webmeeTIng/api/v1/participants/{meeTIngId}");
         //}
 
-        public BaseResponse DeleteParticipants(string meetingId, List<string> emails)
+        public BaseResponse DeleteParticipants(string meeTIngId, List<string> emails)
         {
 #if NETSTANDARD
             var data = Newtonsoft.Json.JsonConvert.SerializeObject(emails);
 #elif NET
             var data = System.Text.Json.JsonSerializer.Serialize(emails);
 #endif
-            return InvokeDelete<BaseResponse>($"webmeeting/api/v1/participants/{meetingId}", data);
+            return InvokeDelete<BaseResponse>($"webmeeTIng/api/v1/participants/{meeTIngId}", data);
         }
 
         public async Task<ScheduledResponse> PostScheduledAsync(ScheduledRequest request)
         {
-            return await InvokePostAsync<ScheduledResponse, ScheduledRequest>($"webmeeting/api/v1/scheduled", request);
+            return await InvokePostAsync<ScheduledResponse, ScheduledRequest>($"webmeeTIng/api/v1/scheduled", request);
         }
 
         public ScheduledResponse PostScheduled(ScheduledRequest request)
         {
-            return InvokePost<ScheduledResponse, ScheduledRequest>($"webmeeting/api/v1/scheduled", request);
+            return InvokePost<ScheduledResponse, ScheduledRequest>($"webmeeTIng/api/v1/scheduled", request);
         }
 
-        public async Task<BaseResponse> DeleteScheduledAsync(string meetingId)
+        public async Task<BaseResponse> DeleteScheduledAsync(string meeTIngId)
         {
-            return await InvokeDeleteAsync<BaseResponse>($"webmeeting/api/v1/scheduled/{meetingId}");
+            return await InvokeDeleteAsync<BaseResponse>($"webmeeTIng/api/v1/scheduled/{meeTIngId}");
         }
 
-        public BaseResponse DeleteScheduled(string meetingId)
+        public BaseResponse DeleteScheduled(string meeTIngId)
         {
-            return InvokeDelete<BaseResponse>($"webmeeting/api/v1/scheduled/{meetingId}");
+            return InvokeDelete<BaseResponse>($"webmeeTIng/api/v1/scheduled/{meeTIngId}");
         }
 
-        public async Task<ScheduledResponse> GetScheduledAsync(string meetingId)
+        public async Task<ScheduledResponse> GetScheduledAsync(string meeTIngId)
         {
-            return await InvokeGetAsync<ScheduledResponse>($"webmeeting/api/v1/scheduled/{meetingId}");
+            return await InvokeGetAsync<ScheduledResponse>($"webmeeTIng/api/v1/scheduled/{meeTIngId}");
         }
 
-        public ScheduledResponse GetScheduled(string meetingId)
+        public ScheduledResponse GetScheduled(string meeTIngId)
         {
-            return InvokeGet<ScheduledResponse>($"webmeeting/api/v1/scheduled/{meetingId}");
+            return InvokeGet<ScheduledResponse>($"webmeeTIng/api/v1/scheduled/{meeTIngId}");
         }
 
-        public MeetingsListResponse MeetingList(string subjectContains = "", int daysLimit = 0, int extension = 0)
+        public MeeTIngsListResponse MeeTIngList(string subjectContains = "", int daysLimit = 0, int extension = 0)
         {
-            string requestUri = "webmeeting/api/v1/meetings/list?";
+            string requestUri = "webmeeTIng/api/v1/meeTIngs/list?";
             if (!string.IsNullOrEmpty(subjectContains))
                 requestUri += $"subjectContains={subjectContains}&";
             if (daysLimit != 0)
                 requestUri += $"daysLimit={daysLimit}&";
             if (extension != 0)
                 requestUri += $"extension={extension}&";
-            return InvokeGet<MeetingsListResponse>(requestUri);
+            return InvokeGet<MeeTIngsListResponse>(requestUri);
         }
 
-        public async Task<MeetingsListResponse> MeetingListAsync(string subjectContains = "", int daysLimit = 0, int extension = 0)
+        public async Task<MeeTIngsListResponse> MeeTIngListAsync(string subjectContains = "", int daysLimit = 0, int extension = 0)
         {
-            string requestUri = "webmeeting/api/v1/meetings/list?";
+            string requestUri = "webmeeTIng/api/v1/meeTIngs/list?";
             if (!string.IsNullOrEmpty(subjectContains))
                 requestUri += $"subjectContains={subjectContains}&";
             if (daysLimit != 0)
                 requestUri += $"daysLimit={daysLimit}&";
             if (extension != 0)
                 requestUri += $"extension={extension}&";
-            return await InvokeGetAsync<MeetingsListResponse>(requestUri);
+            return await InvokeGetAsync<MeeTIngsListResponse>(requestUri);
         }
 
-        public MeetingsActiveResponse MeetingActive()
+        public MeeTIngsActiveResponse MeeTIngActive()
         {
-            string requestUri = "webmeeting/api/v1/meetings/active";
-            return InvokeGet<MeetingsActiveResponse>(requestUri);
+            string requestUri = "webmeeTIng/api/v1/meeTIngs/active";
+            return InvokeGet<MeeTIngsActiveResponse>(requestUri);
         }
 
-        public async Task<CountparticipantsResponse> CountParticipantsAsync(string meetingId)
+        public async Task<CountparticipantsResponse> CountParticipantsAsync(string meeTIngId)
         {
-            string requestUri = $"webmeeting/api/v1/countparticipants/{meetingId}";
+            string requestUri = $"webmeeTIng/api/v1/countparticipants/{meeTIngId}";
             return await InvokeGetAsync<CountparticipantsResponse>(requestUri);
         }
 
-        public CountparticipantsResponse CountParticipants(string meetingId)
+        public CountparticipantsResponse CountParticipants(string meeTIngId)
         {
-            string requestUri = $"webmeeting/api/v1/countparticipants/{meetingId}";
+            string requestUri = $"webmeeTIng/api/v1/countparticipants/{meeTIngId}";
             return InvokeGet<CountparticipantsResponse>(requestUri);
         }
 
-        private Tout InvokePost<Tout, Tin>(string requestUri, Tin obj)
-        {
 #if NETSTANDARD
+        private TOut InvokePost<TOut, TIn>(string requestUri, TIn obj)
+        {
             var data = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
-#elif NET
-            var data = System.Text.Json.JsonSerializer.Serialize(obj);
-#endif
             using (var webClient = new System.Net.WebClient
             {
                 BaseAddress = _uri
@@ -145,15 +142,12 @@ namespace _3ai.solutions._3CX
                 webClient.Headers.Add("3CX-ApiKey", _apiKey);
                 webClient.Headers.Add("content-type", "application/json");
                 var resContent = webClient.UploadString(requestUri, "POST", data);
-#if NETSTANDARD
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<Tout>(resContent);
-#elif NET
-                return System.Text.Json.JsonSerializer.Deserialize<Tout>(resContent);
-#endif
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<TOut>(resContent);
             }
         }
+#endif
 
-        private async Task<Tout> InvokePostAsync<Tout, Tin>(string requestUri, Tin obj)
+        private async Task<TOut> InvokePostAsync<TOut, TIn>(string requestUri, TIn obj)
         {
 #if NETSTANDARD
             var data = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
@@ -164,24 +158,25 @@ namespace _3ai.solutions._3CX
             var res = await _httpClient.PostAsync(requestUri, content);
             var resContent = await res.Content.ReadAsStringAsync();
 #if NETSTANDARD
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<Tout>(resContent);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<TOut>(resContent);
 #elif NET
-            return System.Text.Json.JsonSerializer.Deserialize<Tout>(resContent);
+            return System.Text.Json.JsonSerializer.Deserialize<TOut>(resContent);
 #endif
         }
 
-        private async Task<Tout> InvokeGetAsync<Tout>(string requestUri)
+        private async Task<TOut> InvokeGetAsync<TOut>(string requestUri)
         {
             var res = await _httpClient.GetAsync(requestUri);
             var resContent = await res.Content.ReadAsStringAsync();
 #if NETSTANDARD
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<Tout>(resContent);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<TOut>(resContent);
 #elif NET
-            return System.Text.Json.JsonSerializer.Deserialize<Tout>(resContent);
+            return System.Text.Json.JsonSerializer.Deserialize<TOut>(resContent);
 #endif
         }
 
-        private Tout InvokeGet<Tout>(string requestUri)
+#if NETSTANDARD
+        private TOut InvokeGet<TOut>(string requestUri)
         {
             using (var webClient = new System.Net.WebClient
             {
@@ -191,26 +186,25 @@ namespace _3ai.solutions._3CX
                 webClient.Headers.Add("3CX-ApiKey", _apiKey);
                 webClient.Headers.Add("content-type", "application/json");
                 var resContent = webClient.DownloadString(requestUri);
-#if NETSTANDARD
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<Tout>(resContent);
-#elif NET
-                return System.Text.Json.JsonSerializer.Deserialize<Tout>(resContent);
-#endif
+
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<TOut>(resContent);
             }
         }
+#endif
 
-        private async Task<Tout> InvokeDeleteAsync<Tout>(string requestUri)
+        private async Task<TOut> InvokeDeleteAsync<TOut>(string requestUri)
         {
             var res = await _httpClient.DeleteAsync(requestUri);
             var resContent = await res.Content.ReadAsStringAsync();
 #if NETSTANDARD
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<Tout>(resContent);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<TOut>(resContent);
 #elif NET
-            return System.Text.Json.JsonSerializer.Deserialize<Tout>(resContent);
+            return System.Text.Json.JsonSerializer.Deserialize<TOut>(resContent);
 #endif
         }
 
-        private Tout InvokeDelete<Tout>(string requestUri, string data = "")
+#if NETSTANDARD
+        private TOut InvokeDelete<TOut>(string requestUri, string data = "")
         {
             using (var webClient = new System.Net.WebClient
             {
@@ -220,13 +214,10 @@ namespace _3ai.solutions._3CX
                 webClient.Headers.Add("3CX-ApiKey", _apiKey);
                 webClient.Headers.Add("content-type", "application/json");
                 var resContent = webClient.UploadString(requestUri, "DELETE", data);
-#if NETSTANDARD
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<Tout>(resContent);
-#elif NET
-                return System.Text.Json.JsonSerializer.Deserialize<Tout>(resContent);
-#endif
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<TOut>(resContent);
             }
         }
+#endif
 
         public void Dispose()
         {
