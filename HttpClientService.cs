@@ -25,108 +25,108 @@ namespace _3ai.solutions._3CX
 
         public async Task<AdhocResponse> AdhocAsync(string email, int extension, string subject)
         {
-            return await InvokePostAsync<AdhocResponse, string>($"webmeeTIng/api/v1/adhoc?email={email}&extension={extension}&subject={subject}", "");
+            return await InvokePostAsync<AdhocResponse, string>($"webmeeting/api/v1/adhoc?email={email}&extension={extension}&subject={subject}", "");
         }
 
         public AdhocResponse Adhoc(string email, int extension, string subject)
         {
-            return InvokePost<AdhocResponse, string>($"webmeeTIng/api/v1/adhoc?email={email}&extension={extension}&subject={subject}", "");
+            return InvokePost<AdhocResponse, string>($"webmeeting/api/v1/adhoc?email={email}&extension={extension}&subject={subject}", "");
         }
 
-        public async Task<BaseResponse> PostParticipantsAsync(string meeTIngId, List<Participant> participants)
+        public async Task<BaseResponse> PostParticipantsAsync(string meetingId, List<Participant> participants)
         {
-            return await InvokePostAsync<BaseResponse, List<Participant>>($"webmeeTIng/api/v1/participants/{meeTIngId}", participants);
+            return await InvokePostAsync<BaseResponse, List<Participant>>($"webmeeting/api/v1/participants/{meetingId}", participants);
         }
 
-        public BaseResponse PostParticipants(string meeTIngId, List<Participant> participants)
+        public BaseResponse PostParticipants(string meetingId, List<Participant> participants)
         {
-            return InvokePost<BaseResponse, List<Participant>>($"webmeeTIng/api/v1/participants/{meeTIngId}", participants);
+            return InvokePost<BaseResponse, List<Participant>>($"webmeeting/api/v1/participants/{meetingId}", participants);
         }
 
-        //public async Task<BaseResponse> DeleteParticipantsAsync(string meeTIngId, List<string> emails)
+        //public async Task<BaseResponse> DeleteParticipantsAsync(string meetingId, List<string> emails)
         //{
-        //    return await InvokeDeleteAsync<BaseResponse>($"webmeeTIng/api/v1/participants/{meeTIngId}");
+        //    return await InvokeDeleteAsync<BaseResponse>($"webmeeting/api/v1/participants/{meetingId}");
         //}
 
-        public BaseResponse DeleteParticipants(string meeTIngId, List<string> emails)
+        public BaseResponse DeleteParticipants(string meetingId, List<string> emails)
         {
 #if NETSTANDARD
             var data = Newtonsoft.Json.JsonConvert.SerializeObject(emails);
 #elif NET
             var data = System.Text.Json.JsonSerializer.Serialize(emails);
 #endif
-            return InvokeDelete<BaseResponse>($"webmeeTIng/api/v1/participants/{meeTIngId}", data);
+            return InvokeDelete<BaseResponse>($"webmeeting/api/v1/participants/{meetingId}", data);
         }
 
         public async Task<ScheduledResponse> PostScheduledAsync(ScheduledRequest request)
         {
-            return await InvokePostAsync<ScheduledResponse, ScheduledRequest>($"webmeeTIng/api/v1/scheduled", request);
+            return await InvokePostAsync<ScheduledResponse, ScheduledRequest>($"webmeeting/api/v1/scheduled", request);
         }
 
         public ScheduledResponse PostScheduled(ScheduledRequest request)
         {
-            return InvokePost<ScheduledResponse, ScheduledRequest>($"webmeeTIng/api/v1/scheduled", request);
+            return InvokePost<ScheduledResponse, ScheduledRequest>($"webmeeting/api/v1/scheduled", request);
         }
 
-        public async Task<BaseResponse> DeleteScheduledAsync(string meeTIngId)
+        public async Task<BaseResponse> DeleteScheduledAsync(string meetingId)
         {
-            return await InvokeDeleteAsync<BaseResponse>($"webmeeTIng/api/v1/scheduled/{meeTIngId}");
+            return await InvokeDeleteAsync<BaseResponse>($"webmeeting/api/v1/scheduled/{meetingId}");
         }
 
-        public BaseResponse DeleteScheduled(string meeTIngId)
+        public BaseResponse DeleteScheduled(string meetingId)
         {
-            return InvokeDelete<BaseResponse>($"webmeeTIng/api/v1/scheduled/{meeTIngId}");
+            return InvokeDelete<BaseResponse>($"webmeeting/api/v1/scheduled/{meetingId}");
         }
 
-        public async Task<ScheduledResponse> GetScheduledAsync(string meeTIngId)
+        public async Task<ScheduledResponse> GetScheduledAsync(string meetingId)
         {
-            return await InvokeGetAsync<ScheduledResponse>($"webmeeTIng/api/v1/scheduled/{meeTIngId}");
+            return await InvokeGetAsync<ScheduledResponse>($"webmeeting/api/v1/scheduled/{meetingId}");
         }
 
-        public ScheduledResponse GetScheduled(string meeTIngId)
+        public ScheduledResponse GetScheduled(string meetingId)
         {
-            return InvokeGet<ScheduledResponse>($"webmeeTIng/api/v1/scheduled/{meeTIngId}");
+            return InvokeGet<ScheduledResponse>($"webmeeting/api/v1/scheduled/{meetingId}");
         }
 
-        public MeeTIngsListResponse MeeTIngList(string subjectContains = "", int daysLimit = 0, int extension = 0)
+        public MeetingsListResponse MeetingList(string subjectContains = "", int daysLimit = 0, int extension = 0)
         {
-            string requestUri = "webmeeTIng/api/v1/meeTIngs/list?";
+            string requestUri = "webmeeting/api/v1/meetings/list?";
             if (!string.IsNullOrEmpty(subjectContains))
                 requestUri += $"subjectContains={subjectContains}&";
             if (daysLimit != 0)
                 requestUri += $"daysLimit={daysLimit}&";
             if (extension != 0)
                 requestUri += $"extension={extension}&";
-            return InvokeGet<MeeTIngsListResponse>(requestUri);
+            return InvokeGet<MeetingsListResponse>(requestUri);
         }
 
-        public async Task<MeeTIngsListResponse> MeeTIngListAsync(string subjectContains = "", int daysLimit = 0, int extension = 0)
+        public async Task<MeetingsListResponse> MeetingListAsync(string subjectContains = "", int daysLimit = 0, int extension = 0)
         {
-            string requestUri = "webmeeTIng/api/v1/meeTIngs/list?";
+            string requestUri = "webmeeting/api/v1/meetings/list?";
             if (!string.IsNullOrEmpty(subjectContains))
                 requestUri += $"subjectContains={subjectContains}&";
             if (daysLimit != 0)
                 requestUri += $"daysLimit={daysLimit}&";
             if (extension != 0)
                 requestUri += $"extension={extension}&";
-            return await InvokeGetAsync<MeeTIngsListResponse>(requestUri);
+            return await InvokeGetAsync<MeetingsListResponse>(requestUri);
         }
 
-        public MeeTIngsActiveResponse MeeTIngActive()
+        public MeetingsActiveResponse MeetingActive()
         {
-            string requestUri = "webmeeTIng/api/v1/meeTIngs/active";
-            return InvokeGet<MeeTIngsActiveResponse>(requestUri);
+            string requestUri = "webmeeting/api/v1/meetings/active";
+            return InvokeGet<MeetingsActiveResponse>(requestUri);
         }
 
-        public async Task<CountparticipantsResponse> CountParticipantsAsync(string meeTIngId)
+        public async Task<CountparticipantsResponse> CountParticipantsAsync(string meetingId)
         {
-            string requestUri = $"webmeeTIng/api/v1/countparticipants/{meeTIngId}";
+            string requestUri = $"webmeeting/api/v1/countparticipants/{meetingId}";
             return await InvokeGetAsync<CountparticipantsResponse>(requestUri);
         }
 
-        public CountparticipantsResponse CountParticipants(string meeTIngId)
+        public CountparticipantsResponse CountParticipants(string meetingId)
         {
-            string requestUri = $"webmeeTIng/api/v1/countparticipants/{meeTIngId}";
+            string requestUri = $"webmeeting/api/v1/countparticipants/{meetingId}";
             return InvokeGet<CountparticipantsResponse>(requestUri);
         }
 
